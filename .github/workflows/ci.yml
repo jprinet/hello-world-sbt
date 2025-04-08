@@ -21,7 +21,7 @@ jobs:
       - name: List cache content
         run: ls -la /tmp/develocity-cache
       - name: Create cache archive
-        run: tar czf develocity-cache.tar.gz -C /tmp/develocity-cache
+        run: tar -czvf develocity-cache.tar.gz /tmp/develocity-cache
       - name: List of the GitHub Actions environment variables
         run: env
       - name: Upload cache archive
