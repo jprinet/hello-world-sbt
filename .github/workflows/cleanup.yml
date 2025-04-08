@@ -1,0 +1,15 @@
+name: CI
+on:
+  # schedule:
+  #   # Every Sunday at 22:00 UTC
+  #   - cron: '0 22 * * 0'
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: seed-cache
+    steps:
+      - name: Remove cache archives older than 5 days
+        run: |
+          find /path/to/archives* -mtime +5 -delete

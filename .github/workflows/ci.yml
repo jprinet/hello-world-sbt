@@ -64,4 +64,3 @@ jobs:
         env:
           DEVELOCITY_ACCESS_KEY: "${{ secrets.DEVELOCITY_ACCESS_KEY }}"
         run: sbt -Ddevelocity.internal.cache.verbose=true -Ddevelocity.internal.cache.defaultLogLevel=info clean compile test
-        
