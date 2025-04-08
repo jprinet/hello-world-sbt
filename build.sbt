@@ -27,7 +27,7 @@ ThisBuild / develocityConfiguration ~= { previous =>
     )
     .withBuildCache(
       previous.buildCache
-        .withLocal(previous.buildCache.local.withEnabled(true))
+        .withLocal(previous.buildCache.local.withEnabled(true).withDirectory(Some(file("/tmp/develocity-cache"))))
         .withRemote(previous.buildCache.remote.withStoreEnabled(false))
     )
 }

@@ -17,6 +17,6 @@ jobs:
       - name: Build and Test
         env:
           DEVELOCITY_ACCESS_KEY: "${{ secrets.DEVELOCITY_ACCESS_KEY }}"
-        run: sbt -v test
+        run: sbt clean compile test
       - name: List content
         run: ls -ltR /
