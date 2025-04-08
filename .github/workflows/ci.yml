@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  seed-cache:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,6 +14,14 @@ jobs:
           java-version: 11
       - name: Setup sbt launcher
         uses: sbt/setup-sbt@v1
+      - uses: actions/download-artifact@v4
+        with:
+          name: cache-archive-${{ github.repository_owner }}-${{ github.ref_name }}-${{ github.event.pull_request.number }}
+          path: /tmp
+      - name: Restore cache
+        run: tar -xzvf /tmp/develocity-cache.tar.gz /tmp/develocity-cache
+      - name: List cache content
+        run: ls -la /tmp/develocity-cache
       - name: Build and Test
         env:
           DEVELOCITY_ACCESS_KEY: "${{ secrets.DEVELOCITY_ACCESS_KEY }}"
@@ -27,6 +35,32 @@ jobs:
       - name: Upload cache archive
         uses: actions/upload-artifact@v4
         with:
-          name: cache-archive-${{ github.repository }}-${{ github.ref_name }}-${{ github.event.pull_request.number }}
+          name: cache-archive-${{ github.repository_owner }}-${{ github.ref_name }}-${{ github.event.pull_request.number }}
           path: develocity-cache.tar.gz
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    depends-on: seed-cache
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 11
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+      - uses: actions/download-artifact@v4
+        with:
+          name: cache-archive-${{ github.repository_owner }}-${{ github.ref_name }}-${{ github.event.pull_request.number }}
+          path: /tmp
+      - name: Restore cache
+        run: tar -xzvf /tmp/develocity-cache.tar.gz /tmp/develocity-cache
+      - name: List cache content
+        run: ls -la /tmp/develocity-cache
+      - name: Build and Test
+        env:
+          DEVELOCITY_ACCESS_KEY: "${{ secrets.DEVELOCITY_ACCESS_KEY }}"
+        run: sbt -Ddevelocity.internal.cache.verbose=true -Ddevelocity.internal.cache.defaultLogLevel=info clean compile test
         
