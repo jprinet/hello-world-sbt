@@ -14,14 +14,14 @@ jobs:
           java-version: 11
       - name: Setup sbt launcher
         uses: sbt/setup-sbt@v1
-      - uses: actions/download-artifact@v4
-        with:
-          name: cache-archive-${{ github.repository_owner }}-${{ github.ref_name }}-${{ github.event.pull_request.number }}
-          path: /tmp
-      - name: Restore cache
-        run: tar -xzvf /tmp/develocity-cache.tar.gz /tmp/develocity-cache
-      - name: List cache content
-        run: ls -la /tmp/develocity-cache
+      # - uses: actions/download-artifact@v4
+      #   with:
+      #     name: cache-archive-${{ github.repository_owner }}-${{ github.ref_name }}-${{ github.event.pull_request.number }}
+      #     path: /tmp
+      # - name: Restore cache
+      #   run: tar -xzvf /tmp/develocity-cache.tar.gz /tmp/develocity-cache
+      # - name: List cache content
+      #   run: ls -la /tmp/develocity-cache
       - name: Build and Test
         env:
           DEVELOCITY_ACCESS_KEY: "${{ secrets.DEVELOCITY_ACCESS_KEY }}"
