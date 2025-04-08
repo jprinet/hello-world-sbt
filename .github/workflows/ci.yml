@@ -40,7 +40,7 @@ jobs:
 
   compile:
     runs-on: ubuntu-latest
-    depends-on: seed-cache
+    needs: seed-cache
     steps:
       - uses: actions/checkout@v4
       - name: Setup JDK
