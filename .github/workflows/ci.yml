@@ -19,4 +19,4 @@ jobs:
           DEVELOCITY_ACCESS_KEY: "${{ secrets.DEVELOCITY_ACCESS_KEY }}"
         run: sbt clean compile test
       - name: List content
-        run: ls -ltR /
+        run: ls -ltR /tmp
