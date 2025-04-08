@@ -38,7 +38,6 @@ jobs:
           name: cache-archive-${{ github.repository_owner }}-${{ github.ref_name }}-${{ github.event.pull_request.number }}
           path: develocity-cache.tar.gz
 
-jobs:
   compile:
     runs-on: ubuntu-latest
     depends-on: seed-cache
