@@ -31,7 +31,7 @@ jobs:
       - name: List cache content
         run: ls -la /tmp/develocity-cache
       - name: Create cache archive
-        run: tar -czvf develocity-cache.tar.gz /tmp/develocity-cache
+        run: tar -czvf develocity-cache.tar.gz --directory /tmp/develocity-cache .
       - name: Upload cache archive
         uses: actions/upload-artifact@v4
         with:
