@@ -17,6 +17,16 @@ jobs:
       - name: Build and Test
         env:
           DEVELOCITY_ACCESS_KEY: "${{ secrets.DEVELOCITY_ACCESS_KEY }}"
-        run: sbt clean compile test
-      - name: List content
-        run: ls -ltR /tmp
+        run: sbt -Ddevelocity.internal.cache.verbose=true -Ddevelocity.internal.cache.defaultLogLevel=info clean compile test
+      - name: List cache content
+        run: ls -la /tmp/develocity-cache
+      - name: Create cache archive
+        run: tar czf develocity-cache.tar.gz -C /tmp/develocity-cache
+      - name: List of the GitHub Actions environment variables
+        run: env
+      - name: Upload cache archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: cache-archive-${{ github.repository }}-${{ github.ref_name }}-${{ github.event.pull_request.number }}
+          path: develocity-cache.tar.gz
+        
