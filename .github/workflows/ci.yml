@@ -16,6 +16,6 @@ jobs:
         uses: sbt/setup-sbt@v1
       - name: Build and Test
         env:
-          DEVELOCITY_ACCESS_KEY: "${{ secrets.DV_SOLUTIONS_ACCESS_KEY }}"
+          DEVELOCITY_ACCESS_KEY: "${{ secrets.DEVELOCITY_ACCESS_KEY }}"
         run: sbt -v test
 
