@@ -19,7 +19,9 @@ jobs:
       #     name: cache-archive-${{ github.repository_owner }}-${{ github.ref_name }}-${{ github.event.pull_request.number }}
       #     path: /tmp
       # - name: Restore cache
-      #   run: tar -xzvf /tmp/develocity-cache.tar.gz /tmp/develocity-cache
+      #   run: |
+      #     mkdir -p /tmp/develocity-cache
+      #     tar -xzvf /tmp/develocity-cache.tar.gz --directory /tmp/develocity-cache
       # - name: List cache content
       #   run: ls -la /tmp/develocity-cache
       - name: Build and Test
@@ -30,8 +32,6 @@ jobs:
         run: ls -la /tmp/develocity-cache
       - name: Create cache archive
         run: tar -czvf develocity-cache.tar.gz /tmp/develocity-cache
-      - name: List of the GitHub Actions environment variables
-        run: env
       - name: Upload cache archive
         uses: actions/upload-artifact@v4
         with:
@@ -55,7 +55,9 @@ jobs:
           name: cache-archive-${{ github.repository_owner }}-${{ github.ref_name }}-${{ github.event.pull_request.number }}
           path: /tmp
       - name: Restore cache
-        run: tar -xzvf /tmp/develocity-cache.tar.gz /tmp/develocity-cache
+        run: |
+          mkdir -p /tmp/develocity-cache
+          tar -xzvf /tmp/develocity-cache.tar.gz --directory /tmp/develocity-cache
       - name: List cache content
         run: ls -la /tmp/develocity-cache
       - name: Build and Test
